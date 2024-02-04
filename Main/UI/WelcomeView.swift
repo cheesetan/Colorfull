@@ -27,6 +27,11 @@ struct WelcomeView: View {
     @State var greenLocation: CGPoint = CGPoint(x: 0, y: 0)
     @State var blueLocation: CGPoint = CGPoint(x: 0, y: 0)
     
+    @State var colorSheetLeadingSpacer = false
+    @State var colorSheetTrailingSpacer = true
+    @State var colorSheetTopSpacer = false
+    @State var colorSheetBottomSpacer = true
+    
     @GestureState private var redStartLocation: CGPoint? = nil
     @GestureState private var greenStartLocation: CGPoint? = nil
     @GestureState private var blueStartLocation: CGPoint? = nil
@@ -171,22 +176,116 @@ struct WelcomeView: View {
                                 bubbleSize = 256
                             }
                         }
+                    } else if steps > 6 {
+                        
                     }
                 } label: {
-                    Text(steps < 6 ? "NEXT" : "")
+                    Text(steps < 6 ? "Next" : steps > 6 ? "Continue" : "")
                         .padding()
                         .font(.title3)
                         .fontWeight(.bold)
-                        .fontDesign(.monospaced)
                         .foregroundColor(.white)
                         .frame(width: 250, height: 50)
-                        .background(steps < 6 ? .orange : .clear)
+                        .background(steps < 6 ? .orange : steps > 6 ? .blue : .clear)
                         .cornerRadius(16)
                         .matchedGeometryEffect(id: "button", in: animation)
                 }
                 .buttonStyle(.plain)
-                .padding(.bottom)
+                .padding(.bottom, 30)
             }
+            
+            if steps > 5 {
+                colorSheet
+            }
+        }
+    }
+    
+    var colorSheet: some View {
+        VStack {
+            if colorSheetTopSpacer {
+                Spacer()
+            }
+            HStack {
+                if colorSheetLeadingSpacer {
+                    Spacer()
+                }
+                VStack(alignment: .leading) {
+                    ColorAddition(color1: .red, color2: .green, result: .brown)
+                    ColorAddition(color1: .red, color2: .blue, result: .purple)
+                    ColorAddition(color1: .green, color2: .blue, result: .teal)
+                    ColorAddition(color1: .red, color2: .green, color3: .blue, result: .white)
+                }
+                .padding()
+                .background(Color.secondary.blur(radius: 100))
+                .cornerRadius(20)
+                .padding()
+                .gesture(DragGesture(minimumDistance: 3.0, coordinateSpace: .local)
+                    .onEnded { value in
+                        print(value.translation)
+                        switch(value.translation.width, value.translation.height) {
+                        case (...0, -50...50):
+                            withAnimation(.spring(.bouncy)) {
+                                colorSheetLeadingSpacer = false
+                                colorSheetTrailingSpacer = true
+                            }
+                        case (0..., -50...50):
+                            withAnimation(.spring(.bouncy)) {
+                                colorSheetLeadingSpacer = true
+                                colorSheetTrailingSpacer = false
+                            }
+                        case (-120...120, ...0):
+                            withAnimation(.spring(.bouncy)) {
+                                colorSheetTopSpacer = false
+                                colorSheetBottomSpacer = true
+                            }
+                        case (-120...120, 0...):
+                            withAnimation(.spring(.bouncy)) {
+                                colorSheetTopSpacer = true
+                                colorSheetBottomSpacer = false
+                            }
+                        default: break
+                        }
+                    }
+                )
+                if colorSheetTrailingSpacer {
+                    Spacer()
+                }
+            }
+            if colorSheetBottomSpacer {
+                Spacer()
+            }
+        }
+    }
+    
+    @ViewBuilder
+    func ColorAddition(color1: Color, color2: Color, color3: Color? = nil, result: Color) -> some View {
+        HStack {
+            Circle()
+                .fill(color1)
+                .frame(width: 48, height: 48)
+            Text("+")
+                .font(.title3)
+                .foregroundStyle(.white)
+                .fontWeight(.heavy)
+            Circle()
+                .fill(color2)
+                .frame(width: 48, height: 48)
+            if let color3 = color3 {
+                Text("+")
+                    .font(.title3)
+                    .foregroundStyle(.white)
+                    .fontWeight(.heavy)
+                Circle()
+                    .fill(color3)
+                    .frame(width: 48, height: 48)
+            }
+            Text("=")
+                .font(.title3)
+                .foregroundStyle(.white)
+                .fontWeight(.heavy)
+            Circle()
+                .fill(result)
+                .frame(width: 48, height: 48)
         }
     }
     

@@ -109,23 +109,26 @@ struct WelcomeView: View {
             let timer = Timer.publish(every: 0.1, on: .main, in: .common).autoconnect()
             ZStack {
                 Circle()
-                    .fill(.blue.opacity(0.4))
+                    .fill(Color(red: 0, green: 0, blue: 1))
                     .matchedGeometryEffect(id: "blueBubble", in: animation)
                     .frame(width: bubbleSize, height: bubbleSize)
                     .position(blueLocation)
                     .gesture(dragBlue)
+                    .blendMode(.screen)
                 Circle()
-                    .fill(.green.opacity(0.4))
+                    .fill(Color(red: 0, green: 1, blue: 0))
                     .matchedGeometryEffect(id: "greenBubble", in: animation)
                     .frame(width: bubbleSize, height: bubbleSize)
                     .position(greenLocation)
                     .gesture(dragGreen)
+                    .blendMode(.screen)
                 Circle()
-                    .fill(.red.opacity(0.4))
+                    .fill(Color(red: 1, green: 0, blue: 0))
                     .matchedGeometryEffect(id: "redBubble", in: animation)
                     .frame(width: bubbleSize, height: bubbleSize)
                     .position(redLocation)
                     .gesture(dragRed)
+                    .blendMode(.screen)
             }
             .offset(y: -20)
             .rotationEffect(Angle(degrees: rotationAngle))
@@ -210,10 +213,10 @@ struct WelcomeView: View {
                     Spacer()
                 }
                 VStack(alignment: .leading) {
-                    ColorAddition(color1: .red, color2: .green, result: .brown)
-                    ColorAddition(color1: .red, color2: .blue, result: .purple)
-                    ColorAddition(color1: .green, color2: .blue, result: .teal)
-                    ColorAddition(color1: .red, color2: .green, color3: .blue, result: .white)
+                    ColorAddition(color1: Color(red: 1, green: 0, blue: 0), color2: Color(red: 0, green: 1, blue: 0), result: Color(red: 1, green: 1, blue: 0))
+                    ColorAddition(color1: Color(red: 1, green: 0, blue: 0), color2: Color(red: 0, green: 0, blue: 1), result: Color(red: 1, green: 0, blue: 1))
+                    ColorAddition(color1: Color(red: 0, green: 1, blue: 0), color2: Color(red: 0, green: 0, blue: 1), result: Color(red: 0, green: 1, blue: 1))
+                    ColorAddition(color1: Color(red: 1, green: 0, blue: 0), color2: Color(red: 0, green: 1, blue: 0), color3: Color(red: 0, green: 0, blue: 1), result: Color(red: 1, green: 1, blue: 1))
                 }
                 .padding()
                 .background(Color.secondary.blur(radius: 100))
@@ -223,22 +226,22 @@ struct WelcomeView: View {
                     .onEnded { value in
                         print(value.translation)
                         switch(value.translation.width, value.translation.height) {
-                        case (...0, -50...50):
+                        case (...0, -100...100):
                             withAnimation(.spring(.bouncy)) {
                                 colorSheetLeadingSpacer = false
                                 colorSheetTrailingSpacer = true
                             }
-                        case (0..., -50...50):
+                        case (0..., -100...100):
                             withAnimation(.spring(.bouncy)) {
                                 colorSheetLeadingSpacer = true
                                 colorSheetTrailingSpacer = false
                             }
-                        case (-120...120, ...0):
+                        case (-170...170, ...0):
                             withAnimation(.spring(.bouncy)) {
                                 colorSheetTopSpacer = false
                                 colorSheetBottomSpacer = true
                             }
-                        case (-120...120, 0...):
+                        case (-170...170, 0...):
                             withAnimation(.spring(.bouncy)) {
                                 colorSheetTopSpacer = true
                                 colorSheetBottomSpacer = false

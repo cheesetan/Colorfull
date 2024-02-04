@@ -30,7 +30,7 @@ class BubbleManager: ObservableObject {
             size: CGFloat(64),
             position: CGPoint(x: CGFloat.random(in: 0...UIScreen.main.bounds.width),
                               y: CGFloat.random(in: 0...UIScreen.main.bounds.height)),
-            color: Color(.red),
+            color: Color(red: 1, green: 0, blue: 0),
             blurRadius: CGFloat.random(in: 5...15),
             animationDuration: Double.random(in: 7.5...20)
         )
@@ -41,7 +41,7 @@ class BubbleManager: ObservableObject {
             size: CGFloat(64),
             position: CGPoint(x: CGFloat.random(in: 0...UIScreen.main.bounds.width),
                               y: CGFloat.random(in: 0...UIScreen.main.bounds.height)),
-            color: Color(.green),
+            color: Color(red: 0, green: 1, blue: 0),
             blurRadius: CGFloat.random(in: 5...15),
             animationDuration: Double.random(in: 7.5...20)
         )
@@ -52,7 +52,7 @@ class BubbleManager: ObservableObject {
             size: CGFloat(64),
             position: CGPoint(x: CGFloat.random(in: 0...UIScreen.main.bounds.width),
                               y: CGFloat.random(in: 0...UIScreen.main.bounds.height)),
-            color: Color(.blue),
+            color: Color(red: 0, green: 0, blue: 1),
             blurRadius: CGFloat.random(in: 5...15),
             animationDuration: Double.random(in: 7.5...20)
         )

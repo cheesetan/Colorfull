@@ -1,6 +1,6 @@
 //
 //  CameraView.swift
-//  Colourfull
+//  Colorfull
 //
 //  Created by Tristan Chay on 3/2/24.
 //

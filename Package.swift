@@ -8,32 +8,29 @@ import PackageDescription
 import AppleProductTypes
 
 let package = Package(
-    name: "Colourfull",
+    name: "Colorfull",
     platforms: [
-        .iOS("17.2")
+        .iOS("17.0")
     ],
     products: [
         .iOSApplication(
-            name: "Colourfull",
+            name: "Colorfull",
             targets: ["AppModule"],
-            bundleIdentifier: "com.cheesetan.colourfull",
+            bundleIdentifier: "com.cheesetan.colorfull",
             teamIdentifier: "DBBLGF84W3",
             displayVersion: "1.0",
             bundleVersion: "1",
             appIcon: .placeholder(icon: .twoPeople),
             accentColor: .presetColor(.orange),
             supportedDeviceFamilies: [
-                .pad,
-                .phone
+                .pad
             ],
             supportedInterfaceOrientations: [
-                .portrait,
                 .landscapeRight,
                 .landscapeLeft,
-                .portraitUpsideDown(.when(deviceFamilies: [.pad]))
             ],
             capabilities: [
-                .camera(purposeString: "Colourfull needs access to your camera to view your surroundings.")
+                .camera(purposeString: "Colorfull needs access to your camera to view your surroundings.")
             ],
             appCategory: .education
         )

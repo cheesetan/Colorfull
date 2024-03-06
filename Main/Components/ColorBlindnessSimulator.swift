@@ -19,7 +19,7 @@ struct ColorBlindnessSimulator: View {
             Image(uiImage: simulateColorBlindness(image: image))
                 .resizable()
                 .scaledToFit()
-                .frame(width: 600, height: 600)
+                .frame(width: 800)
         }
     }
     

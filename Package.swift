@@ -20,14 +20,14 @@ let package = Package(
             teamIdentifier: "DBBLGF84W3",
             displayVersion: "1.0",
             bundleVersion: "1",
-            appIcon: .placeholder(icon: .twoPeople),
+            appIcon: .asset("AppIcon"),
             accentColor: .presetColor(.orange),
             supportedDeviceFamilies: [
                 .pad
             ],
             supportedInterfaceOrientations: [
                 .landscapeRight,
-                .landscapeLeft,
+                .landscapeLeft
             ],
             capabilities: [
                 .camera(purposeString: "Colorfull needs access to your camera to view your surroundings.")

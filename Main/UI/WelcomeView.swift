@@ -39,14 +39,19 @@ struct WelcomeView: View {
     @ObservedObject var bubbleManager: BubbleManager = .shared
     
     @Namespace var animation
-        
+    
+    @State var showingExplanationView = false
+    
     var body: some View {
         GeometryReader { geometry in
-            VStack {
-                if steps > 0 {
-                    colorTheoryScreen
-                } else {
-                    startScreen
+            ZStack {
+                Color.black.ignoresSafeArea()
+                VStack {
+                    if steps > 0 {
+                        colorTheoryScreen
+                    } else {
+                        startScreen
+                    }
                 }
             }
             .onAppear {
@@ -56,6 +61,9 @@ struct WelcomeView: View {
                 greenLocation = CGPoint(x: (geometry.size.width / 2) - (bubbleSize / 2) - 5, y: (geometry.size.height / 2) + (bubbleSize / 2) - 2.5)
                 blueLocation = CGPoint(x: (geometry.size.width / 2) + (bubbleSize / 2) + 5, y: (geometry.size.height / 2) + (bubbleSize / 2) - 2.5)
             }
+        }
+        .fullScreenCover(isPresented: $showingExplanationView) {
+            ColorBlindExplanationView()
         }
     }
     
@@ -100,6 +108,12 @@ struct WelcomeView: View {
                 }
                 .buttonStyle(.plain)
                 .padding(.top, -15)
+                
+                Text("Colorfull is best experienced in landscape.")
+                    .font(.caption)
+                    .fontWeight(.bold)
+                    .padding(.top, 5)
+                    .foregroundStyle(.white)
             }
         }
     }
@@ -180,7 +194,7 @@ struct WelcomeView: View {
                             }
                         }
                     } else if steps > 6 {
-                        
+                        showingExplanationView = true
                     }
                 } label: {
                     Text(steps < 6 ? "Next" : steps > 6 ? "Continue" : "")
@@ -219,7 +233,7 @@ struct WelcomeView: View {
                     ColorAddition(color1: Color(red: 1, green: 0, blue: 0), color2: Color(red: 0, green: 1, blue: 0), color3: Color(red: 0, green: 0, blue: 1), result: Color(red: 1, green: 1, blue: 1))
                 }
                 .padding()
-                .background(Color.secondary.blur(radius: 100))
+                .background(.ultraThinMaterial)
                 .cornerRadius(20)
                 .padding()
                 .gesture(DragGesture(minimumDistance: 3.0, coordinateSpace: .local)
